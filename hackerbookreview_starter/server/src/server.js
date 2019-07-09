@@ -1,27 +1,21 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import { graphql } from 'graphql';
+import express from 'express'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import { makeExecutableSchema } from 'graphql-tools'
+import { graphql } from 'graphql'
+import typeDefs from './typedefs'
+import resolvers from './resolvers'
 
-const typeDefs = `
-schema {
-  query: Query
-}
-type Query {
-  hello: String
-  name: String
-}
-`;
+const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-const resolvers = {
-  Query: {
-    hello: () => 'World',
-    name: () => 'James',
-  },
-};
+const app = express()
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+app.use(cors())
 
-const query = process.argv[2];
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 
-graphql(schema, query).then(result => {
-  console.log(JSON.stringify(result, null, 2));
-});
+app.listen(4000, () => {
+  console.log('Go to http://localhost:4000/graphiql to run queries!')
+})
