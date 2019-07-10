@@ -8,3 +8,8 @@ export async function allBooks() {
     console.log(error)
   }
 }
+
+export function imageUrl(size, id) {
+  const zoom = size === 'SMALL' ? 1 : 0
+  return `//books.google.com/books/content?id=${id}&printsec=frontcover&img=1&zoom=${zoom}&source=gbs_api`
+}
