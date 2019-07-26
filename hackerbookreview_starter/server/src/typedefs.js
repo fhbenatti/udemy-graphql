@@ -4,7 +4,16 @@ schema {
 }
 
 type Query {
-  books: [Book]
+  books: [Book],
+  reviews: [Review]
+}
+
+type Review {
+  id: ID!
+  rating: Int
+  title: String
+  comment: String
+  book: Book
 }
 
 type Book {
