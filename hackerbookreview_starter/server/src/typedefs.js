@@ -5,7 +5,8 @@ schema {
 
 type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book],
-  reviews: [Review]
+  reviews: [Review],
+  book(id: ID!): Book
 }
 
 enum BooksOrderBy {
@@ -32,6 +33,7 @@ type Book {
   subtitle: String
   ratingCount: Int
   authors: [Author]
+  reviews: [Review]
 }
 
 type Author {
@@ -43,6 +45,7 @@ type User {
   id: ID!
   name: String
   email: String
+  imageUrl(size: Int = 50): String
 }
 
 enum ImageSize {
