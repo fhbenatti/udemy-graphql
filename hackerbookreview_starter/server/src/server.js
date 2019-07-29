@@ -29,3 +29,42 @@ app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 app.listen(4000, () => {
   console.log('Go to http://localhost:4000/graphiql to run queries!')
 })
+
+/*
+/// HOME QUERY
+
+fragment Book on Book {
+  id
+  title
+  description
+  rating
+}
+
+fragment Review on Review {
+  id
+  title
+  rating
+  comment
+  user{
+    name
+  }
+}
+
+query HomePage($orderBy: BooksOrderBy) {
+  reviews{
+    ...Review
+    book{
+      ...Book
+      imageUrl(size: SMALL)
+    }
+  }
+  books(orderBy: $orderBy) {
+    ...Book
+    imageUrl
+    authors{
+      name
+    }
+  }
+}
+
+*/

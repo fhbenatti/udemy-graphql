@@ -32,8 +32,15 @@ export async function findBookById(id) {
   }
 }
 
-export async function allBooks() {
-  const sql = `select * from hb.book`
+const ORDER_BY = {
+  ID_DESC: 'id desc',
+  ID_ASC: 'id asc',
+  RATING_DESC: 'rating desc'
+}
+
+export async function allBooks(args) {
+  const orderBy = ORDER_BY[args.orderBy]
+  const sql = `select * from hb.book order by ${orderBy}`
   try {
     const result = await query(sql)
     return result.rows
