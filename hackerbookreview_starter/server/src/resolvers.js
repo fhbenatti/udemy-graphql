@@ -1,6 +1,6 @@
 import gravatar from 'gravatar'
 import { allBooks, imageUrl, findBookById } from './book'
-import { allReviews } from './review'
+import { allReviews, createReview } from './review'
 const resolvers = {
   User: {
     imageUrl: (user, args) => gravatar.url(user.email, { s: args.size })
@@ -39,6 +39,12 @@ const resolvers = {
       const { loaders } = context
       const { findBooksByIdsLoader } = loaders
       return findBooksByIdsLoader.load(args.id)
+    }
+  },
+  Mutation: {
+    createReview: (root, args) => {
+      const { reviewInput } = args
+      return createReview(reviewInput)
     }
   }
 }
