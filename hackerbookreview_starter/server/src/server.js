@@ -3,12 +3,15 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import { makeExecutableSchema } from 'graphql-tools'
+import { importSchema } from 'graphql-import'
 import { graphql } from 'graphql'
 import typeDefs from './typedefs'
 import resolvers from './resolvers'
 import loaders from './loader'
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
+const typeDefsGql = importSchema('./src/schema.graphql')
+//const schema = makeExecutableSchema({ typeDefs, resolvers })
+const schema = makeExecutableSchema({ typeDefs: typeDefsGql, resolvers })
 
 const app = express()
 
